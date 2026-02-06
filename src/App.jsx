@@ -1,11 +1,31 @@
 import { useState } from "react";
 
 const results = [
-  { min: 0, max: 20, text: "Solo curiosidad 👀" },
-  { min: 21, max: 40, text: "Algo raro hay..." },
-  { min: 41, max: 60, text: "Muchas señales sospechosas 😬" },
-  { min: 61, max: 80, text: "Esto no pinta bien 💔" },
-  { min: 81, max: 100, text: "Corre. Hay infidelidad segura 🚩" },
+  { min: 0, max: 20, texts: [
+    "Solo curiosidad 👀",
+    "Nada raro por aquí 😌",
+    "Todo tranquilo... por ahora."
+  ]},
+  { min: 21, max: 40, texts: [
+    "Algo raro hay...",
+    "Demasiadas coincidencias 🤔",
+    "No te fíes tanto..."
+  ]},
+  { min: 41, max: 60, texts: [
+    "Muchas señales sospechosas 😬",
+    "Esto ya huele raro...",
+    "Ojo con ese comportamiento."
+  ]},
+  { min: 61, max: 80, texts: [
+    "Esto no pinta bien 💔",
+    "Algo muy turbio está pasando...",
+    "Las alertas están encendidas 🚨"
+  ]},
+  { min: 81, max: 100, texts: [
+    "Corre. Hay infidelidad segura 🚩",
+    "Red flags por todos lados 🚩🚩",
+    "Ni Sherlock lo duda 😳"
+  ]},
 ];
 
 export default function App() {
@@ -23,8 +43,9 @@ export default function App() {
     setTimeout(() => {
       const v = Math.floor(Math.random() * 101);
       const r = results.find(x => v >= x.min && v <= x.max);
+      const randomText = r.texts[Math.floor(Math.random() * r.texts.length)];
       setValue(v);
-      setMessage(r.text);
+      setMessage(randomText);
       setLoading(false);
     }, 2500);
   };
@@ -45,17 +66,31 @@ export default function App() {
           Analizar
         </button>
 
-        {loading && <p className="animate-pulse">Analizando señales ocultas...</p>}
+      {loading && (
+  <div className="w-full bg-gray-300 rounded-full h-3 overflow-hidden">
+    <div className="bg-red-500 h-3 rounded-full animate-loading"></div>
+  </div>
+)}
 
         {value !== null && (
           <div className="space-y-2">
             <div className="text-4xl font-bold">{value}%</div>
             <p className="font-semibold">{message}</p>
-            <button
-              onClick={() => navigator.share?.({text:`${a} y ${b}: ${value}% infidelidad 😳`})}
-              className="text-sm underline">
-              Compartir
-            </button>
+              <button
+                onClick={() => {
+                  const text = `${a} y ${b}: ${value}% infidelidad 😳`;
+
+                  if (navigator.share) {
+                    navigator.share({ text })
+                      .catch(() => navigator.clipboard.writeText(text));
+                  } else {
+                    navigator.clipboard.writeText(text);
+                    alert("Resultado copiado 👍");
+                  }
+                }}
+                className="text-sm underline">
+                Compartir
+              </button>
           </div>
         )}
 
