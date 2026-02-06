@@ -1,0 +1,68 @@
+import { useState } from "react";
+
+const results = [
+  { min: 0, max: 20, text: "Solo curiosidad 👀" },
+  { min: 21, max: 40, text: "Algo raro hay..." },
+  { min: 41, max: 60, text: "Muchas señales sospechosas 😬" },
+  { min: 61, max: 80, text: "Esto no pinta bien 💔" },
+  { min: 81, max: 100, text: "Corre. Hay infidelidad segura 🚩" },
+];
+
+export default function App() {
+  const [a, setA] = useState("");
+  const [b, setB] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [value, setValue] = useState(null);
+  const [message, setMessage] = useState("");
+
+  const analyze = () => {
+    if (!a || !b) return alert("Escribe ambos nombres");
+    setLoading(true);
+    setValue(null);
+
+    setTimeout(() => {
+      const v = Math.floor(Math.random() * 101);
+      const r = results.find(x => v >= x.min && v <= x.max);
+      setValue(v);
+      setMessage(r.text);
+      setLoading(false);
+    }, 2500);
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-red-500 to-pink-600 flex items-center justify-center p-4">
+      <div className="bg-white rounded-xl shadow-xl p-6 w-full max-w-md text-center space-y-4">
+        <h1 className="text-2xl font-bold">💔 Detector de Infidelidad</h1>
+        <p className="text-gray-500">Pon dos nombres y descubre la verdad...</p>
+
+        <input className="w-full border p-2 rounded" placeholder="Tu nombre"
+          value={a} onChange={e=>setA(e.target.value)} />
+        <input className="w-full border p-2 rounded" placeholder="Nombre de tu pareja"
+          value={b} onChange={e=>setB(e.target.value)} />
+
+        <button onClick={analyze}
+          className="w-full bg-red-500 text-white py-2 rounded hover:bg-red-600">
+          Analizar
+        </button>
+
+        {loading && <p className="animate-pulse">Analizando señales ocultas...</p>}
+
+        {value !== null && (
+          <div className="space-y-2">
+            <div className="text-4xl font-bold">{value}%</div>
+            <p className="font-semibold">{message}</p>
+            <button
+              onClick={() => navigator.share?.({text:`${a} y ${b}: ${value}% infidelidad 😳`})}
+              className="text-sm underline">
+              Compartir
+            </button>
+          </div>
+        )}
+
+        <div className="mt-4 text-xs text-gray-400">
+          Espacio para anuncio
+        </div>
+      </div>
+    </div>
+  );
+}
