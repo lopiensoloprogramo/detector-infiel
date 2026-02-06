@@ -95,7 +95,7 @@ export default function App() {
         )}
 
         <div className="mt-4 text-xs text-gray-400">
-          Espacio para anuncio
+         <script src="https://pl28662229.effectivegatecpm.com/78/db/1f/78db1f99523b729d414ccd63bbfb2c21.js"></script>
         </div>
       </div>
     </div>
