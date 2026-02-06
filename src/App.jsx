@@ -95,8 +95,7 @@ export default function App() {
         )}
 
         <div className="mt-4 text-xs text-gray-400">
-       <script async="async" data-cfasync="false" src="https://pl28662058.effectivegatecpm.com/cdac2f20c27e998e97f87612b9762491/invoke.js"></script>
-                <div id="container-cdac2f20c27e998e97f87612b9762491"></div>
+          Espacio para anuncio
         </div>
       </div>
     </div>
