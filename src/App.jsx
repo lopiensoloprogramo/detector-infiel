@@ -35,6 +35,17 @@ export default function App() {
   const [value, setValue] = useState(null);
   const [message, setMessage] = useState("");
 
+const getEffect = (v) => {
+  if (v <= 20) return "happy";
+  if (v <= 40) return "doubt";
+  if (v <= 60) return "sus";
+  if (v <= 80) return "broken";
+  return "danger";
+};
+
+
+
+
   const analyze = () => {
     if (!a || !b) return alert("Escribe ambos nombres");
     setLoading(true);
@@ -94,9 +105,20 @@ export default function App() {
           </div>
         )}
 
+            {value !== null && (
+              <div className={`effect ${getEffect(value)}`}>
+                {getEffect(value) === "happy" && "💖 💕 💗 💓"}
+                {getEffect(value) === "doubt" && "🤔 💭 🤔"}
+                {getEffect(value) === "sus" && "⚡ ❓ ⚡"}
+                {getEffect(value) === "broken" && "💔 💔 💔"}
+                {getEffect(value) === "danger" && "🚨 🚩 🔥"}
+              </div>
+            )}
+
         <div className="mt-4 text-xs text-gray-400">
          <script src="https://pl28662229.effectivegatecpm.com/78/db/1f/78db1f99523b729d414ccd63bbfb2c21.js"></script>
         </div>
+
       </div>
     </div>
   );
